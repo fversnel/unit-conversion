@@ -1,0 +1,52 @@
+{:ms {:notation "ms"
+      :conversions {:s (/ 1000)}}
+ :s {:notation "s"
+     :conversions {:minutes (/ 60)}}
+ :minutes {:notation "min"
+           :conversions {:hours (/ 60)}}
+ :hours {:notation "h"}
+
+    ; Weight
+ :g {:notation "g"
+     :system :metric
+     :conversions {:kg (/ 1000)}}
+ :kg {:notation "kg"}
+ :oz {:system :imperial
+      :notation "oz"
+      :conversions {:g (* 28.349523125)}}
+
+    ; Volume
+ :ml {:system :metric
+      :notation "ml"
+      :conversions {:l (/ 1000)}}
+ :l {:system :metric
+     :notation "l"}
+ :tsp {:system :imperial
+       :notation "tsp"
+       :conversions {:ml (* 5)}}
+ :tbsp {:system :imperial
+        :notation "tbsp"
+        :conversions {:tsp (* 3)}}
+ :cup {:system :imperial
+       :notation "cups"
+       :conversions {:ml (* 240)}}
+
+    ; Heat 
+ :celcius {:system :metric
+           :notation "°C"}
+ :fahrenheit {:system :imperial
+              :notation "°F"
+              :conversions {:celcius ((- 32) (* (/ 5 9)))}}
+
+    ; Length
+ :mm {:system :metric
+      :notation "mm"
+      :conversions {:cm (/ 10)}}
+ :cm {:system :metric
+      :notation "cm"
+      :conversions {:m (/ 100)}}
+ :m {:system :metric
+     :notation "m"}
+ :inch {:system :imperial
+        :notation "in"
+        :conversions {:cm (* 2.54)}}}
