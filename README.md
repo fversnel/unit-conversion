@@ -1,4 +1,4 @@
-# Unit converters
+# Unit conversion
 
 A Clojure(script) library that allows you to convert from one unit to another.
 
