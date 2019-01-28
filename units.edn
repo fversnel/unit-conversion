@@ -6,7 +6,7 @@
            :conversions {:hours (/ 60)}}
  :hours {:notation "h"}
 
-    ; Weight
+ ; Weight
  :g {:notation "g"
      :system :metric
      :conversions {:kg (/ 1000)}}
@@ -15,7 +15,7 @@
       :notation "oz"
       :conversions {:g (* 28.349523125)}}
 
-    ; Volume
+ ; Volume
  :ml {:system :metric
       :notation "ml"
       :conversions {:l (/ 1000)}}
@@ -31,14 +31,14 @@
        :notation "cups"
        :conversions {:ml (* 240)}}
 
-    ; Heat 
+ ; Heat 
  :celcius {:system :metric
            :notation "°C"}
  :fahrenheit {:system :imperial
               :notation "°F"
               :conversions {:celcius ((- 32) (* (/ 5 9)))}}
 
-    ; Length
+ ; Length
  :mm {:system :metric
       :notation "mm"
       :conversions {:cm (/ 10)}}
