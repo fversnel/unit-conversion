@@ -13,7 +13,10 @@
  :kg {:notation "kg"}
  :oz {:system :imperial
       :notation "oz"
-      :conversions {:g (* 28.349523125)}}
+      :conversions {:lb (* 1/16)}}
+ :lb {:system :imperial
+      :notation "lb"
+      :conversions {:kg (/ 45359237/100000000)}}
 
  ; Volume
  :ml {:system :metric
@@ -36,7 +39,7 @@
            :notation "°C"}
  :fahrenheit {:system :imperial
               :notation "°F"
-              :conversions {:celcius ((- 32) (* (/ 5 9)))}}
+              :conversions {:celcius ((- 32) (* 5/9))}}
 
  ; Length
  :mm {:system :metric
@@ -49,4 +52,5 @@
      :notation "m"}
  :inch {:system :imperial
         :notation "in"
+        ; TODO Use ratio instead
         :conversions {:cm (* 2.54)}}}
