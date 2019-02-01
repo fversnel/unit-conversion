@@ -27,13 +27,12 @@
      formula
      vec
      (map formula->fn)
-     reverse
-     (reduce comp identity))
+     (reduce #(comp %2 %1)))
 
     :else
-    (let [[operator rate] formula]
-      (fn [amount]
-        (eval `(~operator ~amount ~rate))))))
+    (let [[operator rate] formula
+          operator (resolve operator)]
+      (fn [amount] (operator amount rate)))))
 
 (defn conversion-graph 
   "Create a graph from a unit map to allow for conversion between units."

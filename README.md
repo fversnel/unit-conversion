@@ -41,25 +41,36 @@ Let's take the following unit map as an example:
 ```clojure
 {:mm {:system :metric
       :notation "mm"
-      :conversions {:cm '(/ 10)}}
+      :conversions {:cm '(* 1/10)}}
  :cm {:system :metric
       :notation "cm"
-      :conversions {:m '(/ 100)}}
+      :conversions {:m '(/ 100)}} ; or (* 1/100)
  :m {:system :metric
      :notation "m"}}
 ```
 
 The library is smart enough that if you provide a conversion from
-`cm` → `m` it will automatically add a conversion for `m` → `cm`.
+`cm → m` it will automatically add a conversion for `m → cm`.
 
 The example is enough for the system to convert from any unit to any other unit. 
-For example converting from to `mm` → `m` will work
-because it will know how to convert from `mm` → `cm` and then to `m`.
+For example converting from to `mm → m` will work
+because it will know how to convert from `mm → cm` and then to `m`.
 
 Each attribute will automatically be stored as a node attribute 
 in the conversion graph.
 The `system` and `notation` attributes are optional, you can also define 
 and add attributes yourself.
+
+The system also support complex conversions that require multiple steps,
+like the `°F → °C` conversion:
+
+```clojure
+{:celcius {:system :metric
+           :notation "°C"}
+ :fahrenheit {:system :imperial
+              :notation "°F"
+              :conversions {:celcius ((- 32) (* 5/9))}}}
+```
 
 ## Dependencies
 

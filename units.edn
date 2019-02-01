@@ -1,15 +1,15 @@
 {:ms {:notation "ms"
-      :conversions {:s (/ 1000)}}
+      :conversions {:s (* 1/1000)}}
  :s {:notation "s"
-     :conversions {:minutes (/ 60)}}
+     :conversions {:minutes (* 1/60)}}
  :minutes {:notation "min"
-           :conversions {:hours (/ 60)}}
+           :conversions {:hours (* 1/60)}}
  :hours {:notation "h"}
 
  ; Weight
  :g {:notation "g"
      :system :metric
-     :conversions {:kg (/ 1000)}}
+     :conversions {:kg (* 1/1000)}}
  :kg {:notation "kg"}
  :oz {:system :imperial
       :notation "oz"
@@ -21,7 +21,7 @@
  ; Volume
  :ml {:system :metric
       :notation "ml"
-      :conversions {:l (/ 1000)}}
+      :conversions {:l (* 1/1000)}}
  :l {:system :metric
      :notation "l"}
  :tsp {:system :imperial
@@ -44,10 +44,10 @@
  ; Length
  :mm {:system :metric
       :notation "mm"
-      :conversions {:cm (/ 10)}}
+      :conversions {:cm (* 1/10)}}
  :cm {:system :metric
       :notation "cm"
-      :conversions {:m (/ 100)}}
+      :conversions {:m (* 1/100)}}
  :m {:system :metric
      :notation "m"}
  :inch {:system :imperial
