@@ -1,38 +1,7 @@
 (ns org.fversnel.unitconversion.core
-  (:require [org.fversnel.unitconversion.graph :as graph]))
-
-(def ^:private invert-operator
-  {'+ '-
-   '- '+
-   '* '/
-   '/ '*})
-
-(defn- invert-formula [formula]
-  (cond
-    (seq? (first formula))
-    (->>
-     formula
-     vec
-     reverse
-     (map invert-formula))
-
-    :else
-    (let [[operator rate] formula]
-      `(~(invert-operator operator) ~rate))))
-
-(defn- formula->fn [formula]
-  (cond
-    (seq? (first formula))
-    (->>
-     formula
-     vec
-     (map formula->fn)
-     (reduce #(comp %2 %1)))
-
-    :else
-    (let [[operator rate] formula
-          operator (resolve operator)]
-      (fn [amount] (operator amount rate)))))
+  (:require
+    [org.fversnel.unitconversion.formula :as f] 
+    [org.fversnel.unitconversion.graph :as g]))
 
 (defn conversion-graph 
   "Create a graph from a unit map to allow for conversion between units."
@@ -40,20 +9,20 @@
   (reduce
    (fn [table [from-unit {:keys [conversions] :as props}]]
      (let [unit-props (dissoc props :conversions)
-           table (graph/add-nodes table [from-unit unit-props])]
+           table (g/add-nodes table [from-unit unit-props])]
        (reduce
         (fn [table [to-unit conversion-formula]]
-          (let [convert-to (formula->fn conversion-formula)
+          (let [convert-to (f/formula->fn conversion-formula)
                 convert-from (-> conversion-formula
-                                 invert-formula
-                                 formula->fn)]
-            (graph/add-edges
+                                 f/invert-formula
+                                 f/formula->fn)]
+            (g/add-edges
              table
              [from-unit to-unit {:convert convert-to}]
              [to-unit from-unit {:convert convert-from}])))
         table
         (seq conversions))))
-   (graph/digraph)
+   (g/digraph)
    (seq unit-map)))
 
 (defn convert
@@ -65,7 +34,7 @@
   (if (= unit to-unit)
     quantity
 
-    (if-let [path (graph/shortest-path unit-graph unit to-unit)]
+    (if-let [path (g/shortest-path unit-graph unit to-unit)]
       {:amount
       (reduce 
         (fn [amount [_ _ {:keys [convert]}]]
