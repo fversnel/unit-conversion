@@ -6,33 +6,35 @@
    '* '/
    '/ '*})
 
+(def resolve-operator
+  {'+ +
+   '- -
+   '* *
+   '/ /})
+
 (defn complex-formula?
-  [formula]
-  (seq? (first formula)))
+  [[formula & _]]
+  (seq? formula))
 
 (defn invert-formula [formula]
   (cond
     (complex-formula? formula)
-    (->>
-     formula
-     vec
-     reverse
-     (map invert-formula))
+    (into '() (map invert-formula) formula)
 
     :else
     (let [[operator rate] formula]
-      `(~(invert-operator operator) ~rate))))
+      (list (invert-operator operator) rate))))
 
 (defn formula->fn [formula]
   (cond
     (complex-formula? formula)
-    (->>
-     formula
-     vec
+    (transduce
      (map formula->fn)
-     (reduce #(comp %2 %1)))
+     (completing #(comp %2 %1))
+     identity
+     formula)
 
     :else
     (let [[operator rate] formula
-          operator (resolve operator)]
+          operator (resolve-operator operator)]
       (fn [amount] (operator amount rate)))))

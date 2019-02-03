@@ -7,4 +7,5 @@
                  [aysylu/loom "1.0.2"]]
   ; TODO Add clojurescript build
   ; TODO Publish to clojars
+  :profiles {:dev {:dependencies [[org.clojure/test.check "0.9.0"]]}}
                  )
