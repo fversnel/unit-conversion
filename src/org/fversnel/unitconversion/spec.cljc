@@ -6,15 +6,13 @@
   (s/or :int (s/and int? #(not= 0 %))
         :ratio ratio?))
 
-(s/def ::basic-formula
-  (s/cat :operator #{'+ '- '* '/} :rate ::rate))
-
-(s/def ::complex-formula (s/+ ::formula))
-
 (s/def ::formula
   (s/or
-   :formula ::basic-formula
-   :complex-formula ::complex-formula))
+   :formula 
+   (s/cat :operator #{'+ '- '* '/} :rate ::rate)
+
+   :complex-formula 
+   (s/+ ::formula)))
 
 (s/fdef formula/invert-operator
   :args (s/cat :operator ::operator)
